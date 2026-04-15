@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: service-a
-        image: nginx
+        image: sirwills/service-a:latest
         ports:
         - containerPort: 80
