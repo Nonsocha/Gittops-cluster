@@ -1,12 +1,10 @@
-FROM nignx:latest
+FROM nginx:latest
 
-WORKDIR /my-app
+# Remove default nginx static files
+RUN rm -rf /usr/share/nginx/html/*
 
-COPY ./usr/share/ngnix/html
-RUN npm install
+# Copy your app files into nginx folder
+COPY my-app/service-a /usr/share/nginx/html
 
-COPY . .
-
-EXPOSE 3000
-
-CMD ["npm", "start"]
+# Expose port 80
+EXPOSE 80
