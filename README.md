@@ -373,3 +373,65 @@ Check per cluster:
 kubectl config use-context cluster1
 kubectl get pods
 ```
+
+## Building And Managing a CICD Using ArgCD
+#### Objective : The Purpose of thie lesson is to successfully integrating ArgoCD into CICD Pipeline,automating the deployment processes for Kubernates applications
+
+### STEP 1: Choose CI Tool (Use GitHub Actions)
+   
+ **Create Gthub Action Workflow**
+
+ ```
+ mkdir -p .github/workflows
+nano .github/workflows/deploy.yml
+```
+Paste inside your deploy.yaml file:
+```
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t your-dockerhub-username/service-a:latest ./service-a
+
+      - name: Push Docker image
+        run: |
+          docker push your-dockerhub-username/service-a:latest
+```
+
+**Add GitHub Secrets**
+
+Go to your repo → Settings → Secrets
+
+Add:
+
+- DOCKER_USERNAME
+- DOCKER_PASSWORD
+
+**Update Your Kubernetes YAML**
+
+Inside your service-a/deployment.yaml
+
+```
+containers:
+  - name: service-a
+    image: your-dockerhub-username/service-a:latest
+ ```   

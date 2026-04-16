@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: service-a
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: service-a
@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: service-a
-        image: sirwills/service-a:latest
+        image: sirwills/service-a:1.0
         ports:
         - containerPort: 80
