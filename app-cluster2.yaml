@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Nonsocha/Gittops-cluster.git
     targetRevision: HEAD
-    path: my-app
+    path: my-app/service-a
   destination:
     server: https://A95625E88BDAD64C149DCA04C52B3DD8.gr7.us-east-1.eks.amazonaws.com
     namespace: default
