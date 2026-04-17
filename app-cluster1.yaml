@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Nonsocha/Gittops-cluster.git
     targetRevision: HEAD
-    path: my-app/service-a
+    path: service-a
   destination:
     server: https://kubernetes.default.svc   # cluster1
     namespace: default
