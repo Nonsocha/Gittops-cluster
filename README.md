@@ -435,3 +435,47 @@ containers:
   - name: service-a
     image: your-dockerhub-username/service-a:latest
  ```   
+
+ ### Add Webhook (REAL-TIME DEPLOYMENT)
+
+ ### STEP 1: Expose ArgoCD Server
+  Use Port Forwarding
+
+  ```
+  kubectl port-forward svc/argocd-server -n argocd 8080:443
+  ```
+
+  ### STEP 2: Get ArgoCD Admin Password
+
+  ```
+  kubectl -n argocd get secret argocd-initial-admin-secret \
+-o jsonpath="{.data.password}" | base64 -d && echo
+```
+
+### STEP 3: Login
+
+```
+argocd login localhost:8080 --username admin --password <password> --insecure
+```
+### STEP 4: Create Webhook in GitHub
+
+Run this to get the URL for webhook
+
+```
+kubectl get svc argocd-server -n argocd
+```
+Your webhook URL becomes
+
+  ```
+  http://a1b2c3d4.us-east-1.elb.amazonaws.com/api/webhook
+  ```
+   Add it to GitHub
+
+   ### Test :
+
+   Make some changes and push
+
+   Then check:
+   ```
+   kubectl get pods -w
+   ```
