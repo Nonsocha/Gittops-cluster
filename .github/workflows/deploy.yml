@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: write
+
 
 jobs:
   deploy:
@@ -34,6 +37,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add ./my-app/service-b/deployment.yaml
+          git add my-app/service-b/deployment.yaml
           git commit -m "Update service-b image to $IMAGE_TAG" || echo "No changes"
           git push
